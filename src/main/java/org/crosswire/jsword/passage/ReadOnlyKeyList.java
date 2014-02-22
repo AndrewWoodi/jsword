@@ -31,7 +31,7 @@ import org.crosswire.jsword.JSOtherMsg;
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class ReadOnlyKeyList implements Key {
+public class ReadOnlyKeyList implements Key<Key> {
     /**
      * Simple ctor
      */

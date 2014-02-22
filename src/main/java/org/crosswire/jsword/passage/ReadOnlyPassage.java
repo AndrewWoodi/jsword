@@ -131,7 +131,7 @@ final class ReadOnlyPassage implements Passage {
     /* (non-Javadoc)
      * @see java.lang.Iterable#iterator()
      */
-    public Iterator<Key> iterator() {
+    public Iterator<Verse> iterator() {
         return ref.iterator();
     }
 
@@ -264,7 +264,7 @@ final class ReadOnlyPassage implements Passage {
     /* (non-Javadoc)
      * @see org.crosswire.jsword.passage.Passage#rangeIterator(org.crosswire.jsword.passage.RestrictionType)
      */
-    public Iterator<Key> rangeIterator(RestrictionType restrict) {
+    public Iterator<VerseRange> rangeIterator(RestrictionType restrict) {
         return ref.rangeIterator(restrict);
     }
 

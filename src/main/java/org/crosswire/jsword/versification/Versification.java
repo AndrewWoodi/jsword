@@ -719,8 +719,6 @@ public class Versification implements ReferenceSystem, Serializable {
      *
      * @param verse
      *            The verse to use as a start
-     * @param n
-     *            the number of verses later than the one we're one
      * @return The new verse or null if there is no next verse
      */
     public Verse next(Verse verse) {

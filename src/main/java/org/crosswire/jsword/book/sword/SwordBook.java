@@ -82,7 +82,7 @@ public class SwordBook extends AbstractPassageBook {
             global = super.createEmptyKeyList();
             Key all = PassageKeyFactory.instance().getGlobalKeyList(v11n);
 
-            for (Key key : all) {
+            for (Key<?extends Key> key : all) {
                 if (contains(key)) {
                     global.addAll(key);
                 }

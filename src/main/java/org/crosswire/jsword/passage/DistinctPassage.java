@@ -78,7 +78,7 @@ public class DistinctPassage extends AbstractPassage {
     protected DistinctPassage(Versification v11n, String refs, Key basis) throws NoSuchVerseException {
         super(v11n, refs);
 
-        store = Collections.synchronizedSortedSet(new TreeSet<Key>());
+        store = Collections.synchronizedSortedSet(new TreeSet<Verse>());
         addVerses(refs, basis);
     }
 
@@ -106,7 +106,7 @@ public class DistinctPassage extends AbstractPassage {
         // copy.store = (SortedSet) store.clone();
         // However SortedSet is not Cloneable so I can't
         // Watch out for this, I'm not sure if it breaks anything.
-        copy.store = new TreeSet<Key>();
+        copy.store = new TreeSet<Verse>();
         copy.store.addAll(store);
 
         return copy;
@@ -115,7 +115,7 @@ public class DistinctPassage extends AbstractPassage {
     /* (non-Javadoc)
      * @see java.lang.Iterable#iterator()
      */
-    public Iterator<Key> iterator() {
+    public Iterator<Verse> iterator() {
         return store.iterator();
     }
 
@@ -131,7 +131,7 @@ public class DistinctPassage extends AbstractPassage {
 
     @Override
     public boolean contains(Key obj) {
-        for (Key aKey : obj) {
+        for (Key<?extends Key> aKey : obj) {
             if (!store.contains(aKey)) {
                 return false;
             }
@@ -148,7 +148,7 @@ public class DistinctPassage extends AbstractPassage {
 
         Verse firstVerse = null;
         Verse lastVerse = null;
-        for (Key aKey : obj) {
+        for (Key<?extends Key> aKey : obj) {
             lastVerse = (Verse) aKey;
             if (firstVerse == null) {
                 firstVerse = lastVerse;
@@ -171,7 +171,7 @@ public class DistinctPassage extends AbstractPassage {
 
         Verse firstVerse = null;
         Verse lastVerse = null;
-        for (Key aKey : obj) {
+        for (Key<?extends Key> aKey : obj) {
             lastVerse = (Verse) aKey;
             if (firstVerse == null) {
                 firstVerse = lastVerse;
@@ -225,7 +225,7 @@ public class DistinctPassage extends AbstractPassage {
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         optimizeWrites();
 
-        store = new TreeSet<Key>();
+        store = new TreeSet<Verse>();
 
         in.defaultReadObject();
 
@@ -240,5 +240,5 @@ public class DistinctPassage extends AbstractPassage {
     /**
      * The place the real data is stored
      */
-    private transient SortedSet<Key> store = new TreeSet<Key>();
+    private transient SortedSet<Verse> store = new TreeSet<Verse>();
 }

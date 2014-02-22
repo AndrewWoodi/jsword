@@ -54,6 +54,7 @@ import org.crosswire.jsword.passage.NoSuchKeyException;
 import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.PassageTally;
 import org.crosswire.jsword.passage.RestrictionType;
+import org.crosswire.jsword.passage.VerseRange;
 import org.crosswire.jsword.util.ConverterFactory;
 import org.xml.sax.SAXException;
 
@@ -126,7 +127,7 @@ public class APIExamples {
             key = book.createEmptyKeyList();
 
             int count = 0;
-            for (Key aKey : book.getKey(reference)) {
+            for (Key<?extends Key> aKey : book.getKey(reference)) {
                 if (++count >= maxKeyCount) {
                     break;
                 }
@@ -190,7 +191,7 @@ public class APIExamples {
         // If I want every key in the Dictionary then I do this (or something
         // like it - in the real world you want to call hasNext() on an iterator
         // before next() but the point is the same:
-        Key keys = dict.getGlobalKeyList();
+        Key<Key> keys = dict.getGlobalKeyList();
         Key first = keys.iterator().next();
 
         System.out.println("The first Key in the default dictionary is " + first);
@@ -284,7 +285,7 @@ public class APIExamples {
         String path = "xsl/cswing/simple.xsl";
         URL xslurl = ResourceUtil.getResource(path);
         // Make ranges  break  on  chapter
-        Iterator<Key> rangeIter = ((Passage) key).rangeIterator(RestrictionType.CHAPTER);
+        Iterator<VerseRange> rangeIter = ((Passage) key).rangeIterator(RestrictionType.CHAPTER);
         // boundaries.
         while (rangeIter.hasNext()) {
             Key range = rangeIter.next();

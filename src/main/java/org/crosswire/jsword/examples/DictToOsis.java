@@ -69,7 +69,7 @@ public class DictToOsis {
         buildDocumentOpen(buf, bmd);
 
         // Get a verse iterator
-        for (Key key : keys) {
+        for (Key<?extends Key> key : keys) {
             BookData bdata = new BookData(book, key);
             SAXEventProvider osissep = bdata.getSAXEventProvider();
             try {

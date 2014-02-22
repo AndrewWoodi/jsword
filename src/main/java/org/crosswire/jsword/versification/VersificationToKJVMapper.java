@@ -454,7 +454,7 @@ public class VersificationToKJVMapper {
          if (offsetBasis instanceof VerseRange) {
              vr = (VerseRange) offsetBasis;
          } else if (offsetBasis instanceof Passage) {
-             Iterator iter = ((Passage) offsetBasis).rangeIterator(RestrictionType.NONE);
+             Iterator<VerseRange> iter = ((Passage) offsetBasis).rangeIterator(RestrictionType.NONE);
              if (iter.hasNext()) {
                  vr = (VerseRange) iter.next();
              }

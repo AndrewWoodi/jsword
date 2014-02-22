@@ -31,7 +31,7 @@ import org.crosswire.common.util.ItemIterator;
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public class DefaultLeafKeyList implements Key {
+public class DefaultLeafKeyList implements Key<Key> {
     /**
      * Default ctor
      */

@@ -134,13 +134,13 @@ public class BitwisePassage extends AbstractPassage {
     /* (non-Javadoc)
      * @see java.lang.Iterable#iterator()
      */
-    public Iterator<Key> iterator() {
+    public Iterator<Verse> iterator() {
         return new VerseIterator();
     }
 
     @Override
     public boolean contains(Key obj) {
-        for (Key aKey : obj) {
+        for (Key<?extends Key> aKey : obj) {
             Verse verse = (Verse) aKey;
             if (!store.get(verse.getOrdinal())) {
                 return false;
@@ -158,7 +158,7 @@ public class BitwisePassage extends AbstractPassage {
 
         Verse firstVerse = null;
         Verse lastVerse = null;
-        for (Key aKey : obj) {
+        for (Key<?extends Key> aKey : obj) {
             lastVerse = (Verse) aKey;
             if (firstVerse == null) {
                 firstVerse = lastVerse;
@@ -200,7 +200,7 @@ public class BitwisePassage extends AbstractPassage {
 
         Verse firstVerse = null;
         Verse lastVerse = null;
-        for (Key aKey : obj) {
+        for (Key<?extends Key> aKey : obj) {
             lastVerse = (Verse) aKey;
             if (firstVerse == null) {
                 firstVerse = lastVerse;
@@ -281,7 +281,7 @@ public class BitwisePassage extends AbstractPassage {
             Versification v11n = getVersification();
             thatStore = new BitSet(v11n.maximumOrdinal() + 1);
 
-            for (Key aKey : key) {
+            for (Key<?extends Key> aKey : key) {
                 int ord = ((Verse) aKey).getOrdinal();
                 if (store.get(ord)) {
                     thatStore.set(ord);
@@ -342,7 +342,7 @@ public class BitwisePassage extends AbstractPassage {
      * @author Joe Walker
      * @author DM Smith
      */
-    private final class VerseIterator implements Iterator<Key> {
+    private final class VerseIterator implements Iterator<Verse> {
         /**
          * Find the first unused verse
          */
@@ -361,12 +361,12 @@ public class BitwisePassage extends AbstractPassage {
         /* (non-Javadoc)
          * @see java.util.Iterator#next()
          */
-        public Key next() throws NoSuchElementException {
+        public Verse next() throws NoSuchElementException {
             if (!hasNext()) {
                 throw new NoSuchElementException();
             }
 
-            Key retcode = getVersification().decodeOrdinal(next);
+            Verse retcode = getVersification().decodeOrdinal(next);
             calculateNext();
 
             return retcode;

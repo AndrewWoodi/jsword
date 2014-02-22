@@ -79,7 +79,7 @@ public class StrongsAnalysis {
         BookData data = null;
         Element osis = null;
         StringBuilder buffer = new StringBuilder();
-        for (Key subkey : wholeBible) {
+        for (Key<?extends Key> subkey : wholeBible) {
             if (subkey.canHaveChildren()) {
                 analyze(sms, book, errors, subkey);
             } else {

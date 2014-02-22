@@ -113,7 +113,7 @@ final class SynchronizedPassage implements Passage {
     /* (non-Javadoc)
      * @see java.lang.Iterable#iterator()
      */
-    public synchronized Iterator<Key> iterator() {
+    public synchronized Iterator<Verse> iterator() {
         return ref.iterator();
     }
 
@@ -246,7 +246,7 @@ final class SynchronizedPassage implements Passage {
     /* (non-Javadoc)
      * @see org.crosswire.jsword.passage.Passage#rangeIterator(org.crosswire.jsword.passage.RestrictionType)
      */
-    public synchronized Iterator<Key> rangeIterator(RestrictionType restrict) {
+    public synchronized Iterator<VerseRange> rangeIterator(RestrictionType restrict) {
         return ref.rangeIterator(restrict);
     }
 

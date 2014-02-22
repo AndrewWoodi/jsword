@@ -30,7 +30,6 @@ import org.crosswire.common.util.ItemIterator;
 import org.crosswire.jsword.JSMsg;
 import org.crosswire.jsword.JSOtherMsg;
 import org.crosswire.jsword.versification.BibleBook;
-import org.crosswire.jsword.versification.QualifiedKey;
 import org.crosswire.jsword.versification.Versification;
 import org.crosswire.jsword.versification.system.Versifications;
 
@@ -780,8 +779,8 @@ public final class Verse implements VerseKey {
     /* (non-Javadoc)
      * @see java.lang.Iterable#iterator()
      */
-    public Iterator<Key> iterator() {
-        return new ItemIterator<Key>(this);
+    public Iterator<Verse> iterator() {
+        return new ItemIterator<Verse>(this);
     }
 
     /* (non-Javadoc)

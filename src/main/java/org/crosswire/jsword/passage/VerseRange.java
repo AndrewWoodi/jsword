@@ -165,7 +165,7 @@ public final class VerseRange implements VerseKey {
      *            The verse to start from
      * @param end
      *            The verse to end with
-     * @deprecated  use {@link #VerseRange(Versification, String, Verse, Verse)} instead
+     * @deprecated  use {@link #VerseRange(org.crosswire.jsword.versification.Versification, Verse, Verse)}  instead
      */
     @Deprecated
     /* package */VerseRange(Verse start, Verse end) {
@@ -625,7 +625,7 @@ public final class VerseRange implements VerseKey {
      * 
      * @return a range iterator
      */
-    public Iterator<Key> rangeIterator(RestrictionType restrict) {
+    public Iterator<VerseRange> rangeIterator(RestrictionType restrict) {
         return new AbstractPassage.VerseRangeIterator(v11n, iterator(), restrict);
     }
 
@@ -854,7 +854,7 @@ public final class VerseRange implements VerseKey {
     /**
      * Iterate over the Verses in the VerseRange
      */
-    private static final class VerseIterator implements Iterator<Key> {
+    private static final class VerseIterator implements Iterator<Verse> {
         /**
          * Ctor
          */
@@ -875,7 +875,7 @@ public final class VerseRange implements VerseKey {
         /* (non-Javadoc)
          * @see java.util.Iterator#next()
          */
-        public Key next() throws NoSuchElementException {
+        public Verse next() throws NoSuchElementException {
             if (nextVerse == null) {
                 throw new NoSuchElementException();
             }
@@ -943,7 +943,7 @@ public final class VerseRange implements VerseKey {
      * 
      * @see org.crosswire.jsword.passage.Key#iterator()
      */
-    public Iterator<Key> iterator() {
+    public Iterator<Verse> iterator() {
         return new VerseIterator(this);
     }
 

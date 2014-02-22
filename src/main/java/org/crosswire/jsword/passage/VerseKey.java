@@ -29,7 +29,7 @@ import org.crosswire.jsword.versification.Versification;
  *      The copyright to this program is held by it's authors.
  * @author DM Smith
  */
-public interface VerseKey extends Key {
+public interface VerseKey extends Key<Verse> {
     /**
      * Get the Versification that defines the Verses in this VerseKey.
      * 

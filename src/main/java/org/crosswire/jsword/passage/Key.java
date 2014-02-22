@@ -33,7 +33,7 @@ import java.io.Serializable;
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public interface Key extends Comparable<Key>, Iterable<Key>, Cloneable, Serializable {
+public interface Key<T extends Key> extends Comparable<Key>, Iterable<T>, Cloneable, Serializable {
     /**
      * A Human readable version of the Key. For Biblical passages this uses
      * short books names, and the shortest sensible rendering, for example

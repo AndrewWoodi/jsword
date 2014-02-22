@@ -37,7 +37,7 @@ import org.crosswire.jsword.passage.RestrictionType;
  *      The copyright to this program is held by it's authors.
  * @author DM Smith
  */
-public abstract class AbstractKeyBackend<T extends OpenFileState> extends AbstractBackend<T> implements Key {
+public abstract class AbstractKeyBackend<T extends OpenFileState> extends AbstractBackend<T> implements Key<Key> {
     /**
      * Simple ctor
      * 

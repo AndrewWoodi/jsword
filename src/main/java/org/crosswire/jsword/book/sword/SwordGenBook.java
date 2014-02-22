@@ -76,7 +76,7 @@ public class SwordGenBook extends AbstractBook {
         set = backend.readIndex();
 
         map = new HashMap<String, Key>();
-        for (Key key : set) {
+        for (Key<?extends Key> key : set) {
             map.put(key.getName(), key);
         }
 

@@ -354,9 +354,7 @@ public class LuceneIndex extends AbstractIndex implements Closeable {
      */
     public final void close() {
         IOUtil.close(searcher);
-        searcher = null;
         IOUtil.close(directory);
-        directory = null;
     }
 
     /**
@@ -392,7 +390,7 @@ public class LuceneIndex extends AbstractIndex implements Closeable {
         int size = key.getCardinality();
         int subCount = count;
         log.debug("Number of keys = {}", Integer.toString(size));
-        for (Key subkey : key) {
+        for (Key<?extends Key> subkey : key) {
             // Bibles and verse based commentaries don't have keys with children.
             // However, tree keyed Books do. So we only index the leaf keys.
             // FIXME(DMS): Should not use recursion!!!!
@@ -496,7 +494,7 @@ public class LuceneIndex extends AbstractIndex implements Closeable {
      * the underlying Lucene functionality.
      * 
      * Note: by using this method, you need to ensure you don't close the searcher while it is being used.
-     * See {@link IndexManager#closeAllIndexes()} for more information
+     * See {@link org.crosswire.jsword.index.IndexManager#closeAllIndexes()} for more information
      */
     public Searcher getSearcher() {
         return searcher;

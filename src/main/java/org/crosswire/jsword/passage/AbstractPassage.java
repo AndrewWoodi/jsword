@@ -185,7 +185,7 @@ public abstract class AbstractPassage implements Passage {
 
         StringBuilder retcode = new StringBuilder();
 
-        Iterator<Key> it = rangeIterator(RestrictionType.NONE);
+        Iterator<VerseRange> it = rangeIterator(RestrictionType.NONE);
         Verse current = null;
         while (it.hasNext()) {
             VerseRange range = (VerseRange) it.next();
@@ -214,7 +214,7 @@ public abstract class AbstractPassage implements Passage {
      * @see org.crosswire.jsword.passage.Key#getRootName()
      */
     public String getRootName() {
-        Iterator<Key> it = rangeIterator(RestrictionType.NONE);
+        Iterator<VerseRange> it = rangeIterator(RestrictionType.NONE);
         while (it.hasNext()) {
             VerseRange range = (VerseRange) it.next();
             return range.getRootName();
@@ -229,7 +229,7 @@ public abstract class AbstractPassage implements Passage {
     public String getOsisRef() {
         StringBuilder retcode = new StringBuilder();
 
-        Iterator<Key> it = rangeIterator(RestrictionType.NONE);
+        Iterator<VerseRange> it = rangeIterator(RestrictionType.NONE);
         boolean hasNext = it.hasNext();
         while (hasNext) {
             Key range = it.next();
@@ -250,7 +250,7 @@ public abstract class AbstractPassage implements Passage {
     public String getOsisID() {
         StringBuilder retcode = new StringBuilder();
 
-        Iterator<Key> it = rangeIterator(RestrictionType.NONE);
+        Iterator<VerseRange> it = rangeIterator(RestrictionType.NONE);
         boolean hasNext = it.hasNext();
         while (hasNext) {
             Key range = it.next();
@@ -322,7 +322,7 @@ public abstract class AbstractPassage implements Passage {
     public boolean hasRanges(RestrictionType restrict) {
         int count = 0;
 
-        Iterator<Key> it = rangeIterator(restrict);
+        Iterator<VerseRange> it = rangeIterator(restrict);
         while (it.hasNext()) {
             it.next();
             count++;
@@ -340,7 +340,7 @@ public abstract class AbstractPassage implements Passage {
     public int countRanges(RestrictionType restrict) {
         int count = 0;
 
-        Iterator<Key> it = rangeIterator(restrict);
+        Iterator<VerseRange> it = rangeIterator(restrict);
         while (it.hasNext()) {
             it.next();
             count++;
@@ -372,7 +372,7 @@ public abstract class AbstractPassage implements Passage {
      * @see org.crosswire.jsword.passage.Passage#getVerseAt(int)
      */
     public Verse getVerseAt(int offset) throws ArrayIndexOutOfBoundsException {
-        Iterator<Key> it = iterator();
+        Iterator<Verse> it = iterator();
         Object retcode = null;
 
         for (int i = 0; i <= offset; i++) {
@@ -390,7 +390,7 @@ public abstract class AbstractPassage implements Passage {
      * @see org.crosswire.jsword.passage.Passage#getRangeAt(int, org.crosswire.jsword.passage.RestrictionType)
      */
     public VerseRange getRangeAt(int offset, RestrictionType restrict) throws ArrayIndexOutOfBoundsException {
-        Iterator<Key> it = rangeIterator(restrict);
+        Iterator<VerseRange> it = rangeIterator(restrict);
         Object retcode = null;
 
         for (int i = 0; i <= offset; i++) {
@@ -407,7 +407,7 @@ public abstract class AbstractPassage implements Passage {
     /* (non-Javadoc)
      * @see org.crosswire.jsword.passage.Passage#rangeIterator(org.crosswire.jsword.passage.RestrictionType)
      */
-    public Iterator<Key> rangeIterator(RestrictionType restrict) {
+    public Iterator<VerseRange> rangeIterator(RestrictionType restrict) {
         return new VerseRangeIterator(getVersification(), iterator(), restrict);
     }
 
@@ -415,7 +415,7 @@ public abstract class AbstractPassage implements Passage {
      * @see org.crosswire.jsword.passage.Passage#containsAll(org.crosswire.jsword.passage.Passage)
      */
     public boolean containsAll(Passage that) {
-        Iterator<Key> that_it = null;
+        Iterator<? extends VerseKey> that_it = null;
 
         if (that instanceof RangedPassage) {
             that_it = ((RangedPassage) that).rangeIterator(RestrictionType.NONE);
@@ -475,7 +475,7 @@ public abstract class AbstractPassage implements Passage {
 
         Passage remainder = this.clone();
 
-        Iterator<Key> it = rangeIterator(restrict);
+        Iterator<VerseRange> it = rangeIterator(restrict);
         while (it.hasNext()) {
             i++;
             Key range = it.next();
@@ -506,16 +506,16 @@ public abstract class AbstractPassage implements Passage {
         raiseEventSuppresion();
         raiseNormalizeProtection();
 
-        Iterator<?> that_it = null;
+        Iterator<VerseRange> that_it = null;
 
         if (key instanceof RangedPassage) {
             that_it = ((RangedPassage) key).rangeIterator(RestrictionType.NONE);
             while (that_it.hasNext()) {
                 // Avoid touching store to make thread safety easier.
-                add((Key) that_it.next());
+                add(that_it.next());
             }
         } else {
-            for (Key subkey : key) {
+            for (Key<?extends Key> subkey : key) {
                 add(subkey);
             }
         }
@@ -543,7 +543,7 @@ public abstract class AbstractPassage implements Passage {
         raiseEventSuppresion();
         raiseNormalizeProtection();
 
-        Iterator<Key> that_it = null;
+        Iterator<VerseRange> that_it = null;
 
         if (key instanceof RangedPassage) {
             that_it = ((RangedPassage) key).rangeIterator(RestrictionType.NONE);
@@ -615,7 +615,7 @@ public abstract class AbstractPassage implements Passage {
         raiseNormalizeProtection();
 
         Passage temp = this.clone();
-        Iterator<Key> it = temp.rangeIterator(RestrictionType.NONE);
+        Iterator<VerseRange> it = temp.rangeIterator(RestrictionType.NONE);
 
         while (it.hasNext()) {
             VerseRange range = restrict.blur(getVersification(), (VerseRange) it.next(), verses, verses);
@@ -636,7 +636,7 @@ public abstract class AbstractPassage implements Passage {
         bout.write(v11n.getName());
         bout.newLine();
 
-        Iterator<Key> it = rangeIterator(RestrictionType.NONE);
+        Iterator<VerseRange> it = rangeIterator(RestrictionType.NONE);
 
         while (it.hasNext()) {
             Key range = it.next();
@@ -1040,11 +1040,11 @@ public abstract class AbstractPassage implements Passage {
     /**
      * Skip over verses that are part of a range
      */
-    protected static final class VerseRangeIterator implements Iterator<Key> {
+    protected static final class VerseRangeIterator implements Iterator<VerseRange> {
         /**
          * iterate, amalgamating Verses into VerseRanges
          */
-        protected VerseRangeIterator(Versification v11n, Iterator<Key> it, RestrictionType restrict) {
+        protected VerseRangeIterator(Versification v11n, Iterator<Verse> it, RestrictionType restrict) {
             this.v11n = v11n;
             this.it = it;
             this.restrict = restrict;
@@ -1129,7 +1129,7 @@ public abstract class AbstractPassage implements Passage {
         /**
          * The Iterator that we are proxying to
          */
-        private Iterator<Key> it;
+        private Iterator<Verse> it;
 
         /**
          * What is the next VerseRange to be considered
@@ -1207,7 +1207,7 @@ public abstract class AbstractPassage implements Passage {
             out.writeInt(countRanges(RestrictionType.NONE));
 
             // write the verse ordinals in a loop
-            Iterator<Key> it = rangeIterator(RestrictionType.NONE);
+            Iterator<VerseRange> it = rangeIterator(RestrictionType.NONE);
             while (it.hasNext()) {
                 VerseRange range = (VerseRange) it.next();
                 out.writeInt(range.getStart().getOrdinal());

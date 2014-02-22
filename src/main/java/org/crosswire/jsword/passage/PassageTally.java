@@ -219,7 +219,7 @@ public class PassageTally extends AbstractPassage {
         StringBuilder retcode = new StringBuilder();
 
         if (order == Order.BIBLICAL) {
-            Iterator<Key> it = rangeIterator(RestrictionType.NONE);
+            Iterator<VerseRange> it = rangeIterator(RestrictionType.NONE);
             Verse current = null;
             while (it.hasNext()) {
                 VerseRange range = (VerseRange) it.next();
@@ -236,7 +236,7 @@ public class PassageTally extends AbstractPassage {
                 max_count = Integer.MAX_VALUE;
             }
 
-            Iterator<Key> it = new OrderedVerseIterator(getVersification(), board);
+            Iterator<Verse> it = new OrderedVerseIterator(getVersification(), board);
             Key current = null;
             int count = 0;
 
@@ -306,7 +306,7 @@ public class PassageTally extends AbstractPassage {
      * 
      * @return A verse Iterator
      */
-    public Iterator<Key> iterator() {
+    public Iterator<Verse> iterator() {
         if (order == Order.BIBLICAL) {
             return new VerseIterator();
         }
@@ -314,7 +314,7 @@ public class PassageTally extends AbstractPassage {
     }
 
     @Override
-    public Iterator<Key> rangeIterator(RestrictionType restrict) {
+    public Iterator<VerseRange> rangeIterator(RestrictionType restrict) {
         if (order == Order.BIBLICAL) {
             return new VerseRangeIterator(getVersification(), iterator(), restrict);
         }
@@ -330,7 +330,7 @@ public class PassageTally extends AbstractPassage {
      */
     @Override
     public boolean contains(Key that) {
-        for (Key aKey : that) {
+        for (Key<?extends Key> aKey : that) {
             Verse verse = (Verse) aKey;
             if (board[verse.getOrdinal()] == 0) {
                 return false;
@@ -439,7 +439,7 @@ public class PassageTally extends AbstractPassage {
 
             incrementMax(that_rt.max);
         } else {
-            for (Key aKey : that) {
+            for (Key<?extends Key> aKey : that) {
                 Verse verse = (Verse) aKey;
                 increment(verse.getOrdinal(), 1);
             }
@@ -588,7 +588,7 @@ public class PassageTally extends AbstractPassage {
             // This is a bit of a cheat, but there is no way I'm going
             // to do the math to speed up the restricted version
             PassageTally temp = this.clone();
-            Iterator<Key> it = temp.rangeIterator(RestrictionType.NONE);
+            Iterator<VerseRange> it = temp.rangeIterator(RestrictionType.NONE);
 
             while (it.hasNext()) {
                 VerseRange range = (VerseRange) it.next();
@@ -667,7 +667,7 @@ public class PassageTally extends AbstractPassage {
      *            The amount to increment/decrement by
      */
     private void alterVerseBase(Key that, int tally) {
-        for (Key aKey : that) {
+        for (Key<?extends Key> aKey : that) {
             Verse verse = (Verse) aKey;
             increment(verse.getOrdinal(), tally);
         }
@@ -829,7 +829,7 @@ public class PassageTally extends AbstractPassage {
      * 
      * @author Joe Walker
      */
-    private final class VerseIterator implements Iterator<Key> {
+    private final class VerseIterator implements Iterator<Verse> {
         /**
          * Find the first unused verse
          */
@@ -847,12 +847,12 @@ public class PassageTally extends AbstractPassage {
         /* (non-Javadoc)
          * @see java.util.Iterator#next()
          */
-        public Key next() throws NoSuchElementException {
+        public Verse next() throws NoSuchElementException {
             if (next >= board.length) {
                 throw new NoSuchElementException();
             }
 
-            Key retcode = getVersification().decodeOrdinal(next);
+            Verse retcode = getVersification().decodeOrdinal(next);
             calculateNext();
 
             return retcode;
@@ -883,7 +883,7 @@ public class PassageTally extends AbstractPassage {
      * 
      * @author Joe Walker
      */
-    private static final class OrderedVerseIterator implements Iterator<Key> {
+    private static final class OrderedVerseIterator implements Iterator<Verse> {
         /**
          * Find the first unused verse
          */
@@ -912,7 +912,7 @@ public class PassageTally extends AbstractPassage {
         /* (non-Javadoc)
          * @see java.util.Iterator#next()
          */
-        public Key next() throws NoSuchElementException {
+        public Verse next() throws NoSuchElementException {
             last = it.next();
             return referenceSystem.decodeOrdinal(last.ord);
         }
@@ -1023,14 +1023,14 @@ public class PassageTally extends AbstractPassage {
      * 
      * @author Joe Walker
      */
-    private static final class OrderedVerseRangeIterator implements Iterator<Key> {
+    private static final class OrderedVerseRangeIterator implements Iterator<VerseRange> {
         /**
          * Find the first unused verse
          */
-        public OrderedVerseRangeIterator(Versification v11n, Iterator<Key> vit, int[] board) {
+        public OrderedVerseRangeIterator(Versification v11n, Iterator<Verse> vit, int[] board) {
             Set<TalliedVerseRange> output = new TreeSet<TalliedVerseRange>();
 
-            Iterator<Key> rit = new VerseRangeIterator(v11n, vit, RestrictionType.NONE);
+            Iterator<VerseRange> rit = new VerseRangeIterator(v11n, vit, RestrictionType.NONE);
             while (rit.hasNext()) {
                 VerseRange range = (VerseRange) rit.next();
 

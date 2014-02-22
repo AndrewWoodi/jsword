@@ -240,15 +240,11 @@ public class BookData implements BookProvider {
 
                     //key might have several child keys, ie. a verse mapping to a range, or list of verses
                     Passage passageOfInterest = KeyUtil.getPassage(verseInRelavantBookContents);
-                    Iterator<Key> passageKeys = passageOfInterest.iterator();
+                    Iterator<Verse> passageKeys = passageOfInterest.iterator();
                     while (passageKeys.hasNext()) {
-                        Key singleKey = passageKeys.next();
+                        Verse singleKey = passageKeys.next();
                         //TODO(CJB): for performance, we probably want to avoid the instanceof, so either change the
                         //method signature, or cast directly and be optimistic
-                        if (!(singleKey instanceof Verse)) {
-                            throw new UnsupportedOperationException("Iterating through a passage gives non-verses");
-                        }
-
                         List<Content> xmlContent = booksContents[i].get(singleKey);
 
                         //if the book simply did not contain that reference (say Greek book, with Gen.1 as a reference)

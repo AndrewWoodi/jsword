@@ -29,7 +29,7 @@ import java.util.Iterator;
  *      The copyright to this program is held by it's authors.
  * @author Joe Walker [joe at eireneh dot com]
  */
-public abstract class AbstractKeyList implements Key {
+public abstract class AbstractKeyList implements Key<Key> {
     /**
      * Build an AbstractKeyList with the given name.
      * 

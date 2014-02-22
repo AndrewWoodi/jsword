@@ -179,7 +179,7 @@ public class DwrBridge {
         // TODO(dms): Push this into Book interface.
         List<String> result = new ArrayList<String>();
         int count = 0;
-        for (Key key : book.getGlobalKeyList()) {
+        for (Key<?extends Key> key : book.getGlobalKeyList()) {
             String entry = key.getName().toLowerCase(sortLocale);
             if (entry.compareTo(target) >= 0) {
                 if (entry.compareTo(endTarget) < 0) {
@@ -270,7 +270,7 @@ public class DwrBridge {
             if (start > 0 || key.getCardinality() > count) {
                 key = book.createEmptyKeyList();
                 int i = 0;
-                for (Key aKey : key) {
+                for (Key<?extends Key> aKey : key) {
                     i++;
                     if (i <= start) {
                         continue;

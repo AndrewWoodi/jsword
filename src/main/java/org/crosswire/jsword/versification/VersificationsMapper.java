@@ -86,15 +86,9 @@ public final class VersificationsMapper {
         }
 
         Passage newPassage = KeyUtil.getPassage(PassageKeyFactory.instance().createEmptyKeyList(target));
-        Iterator<Key> verses = key.iterator();
+        Iterator<Verse> verses = key.iterator();
         while (verses.hasNext()) {
-            Key verseKey = verses.next();
-            if (!(verseKey instanceof Verse)) {
-                throw new UnsupportedOperationException("Somehow, a passage is not resolving to verses");
-            }
-
-            Verse verse = (Verse) verseKey;
-            newPassage.addAll(this.mapVerse(verse, target));
+            newPassage.addAll(this.mapVerse(verses.next(), target));
         }
 
         return newPassage;

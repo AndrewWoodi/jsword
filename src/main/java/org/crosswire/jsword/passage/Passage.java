@@ -188,7 +188,7 @@ public interface Passage extends VerseKey {
      *            Do we break ranges over chapters
      * @return A list enumerator
      */
-    Iterator<Key> rangeIterator(RestrictionType restrict);
+    Iterator<VerseRange> rangeIterator(RestrictionType restrict);
 
     /**
      * Returns true if this collection contains all the specified Verse

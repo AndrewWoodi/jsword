@@ -88,7 +88,6 @@ public class BibleToOsis {
         if (!BY_BOOK) {
             writeDocument(buf);
         }
-
         // Get a verse iterator
         for (Key key : keys) {
             Verse verse = (Verse) key;

@@ -50,7 +50,7 @@ public class BookExporter {
         Key keys = book.getGlobalKeyList();
 
         StringBuilder buf = new StringBuilder();
-        for (Key key : keys) {
+        for (Key<?extends Key> key : keys) {
             //FIXME(CJB) iteration should be pushed down to benefit from performance improvement
             String rawText = book.getRawText(key);
             if (rawText != null && rawText.trim().length() > 0) {
